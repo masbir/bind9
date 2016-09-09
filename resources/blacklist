@@ -1,0 +1,3 @@
+zone "lancera.com" { type master; notify no; file "/etc/bind/null.zone.file"; };
+zone "digitalocean.com" { type master; notify no; file "/etc/bind/null.zone.file"; };
+zone "atlassian.net" { type master; notify no; file "/etc/bind/null.zone.file"; };
