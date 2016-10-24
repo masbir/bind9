@@ -8,6 +8,11 @@ use App\Http\Requests;
 
 class BlacklistController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function edit()
     {
     	$blacklist = new \App\Blacklist(); 
