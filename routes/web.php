@@ -14,26 +14,29 @@
 /*Route::get('/', function () {
     return view('welcome');
 });*/
+Route::group(['domain' => env('APP_HOST')], function () {
+	//views
+	Route::get('/', 'DNSViewsController@index');
+	Route::get('/views/{id}', 'DNSViewsController@view');
 
-//views
-Route::get('/', 'DNSViewsController@index');
-Route::get('/views/{id}', 'DNSViewsController@view');
+	//ips
+	Route::post('/views/{view_id}/ips', 'DNSIPsController@create');
+	Route::post('/views/{view_id}/ips/{id}', 'DNSIPsController@delete');
 
-//ips
-Route::post('/views/{view_id}/ips', 'DNSIPsController@create');
-Route::post('/views/{view_id}/ips/{id}', 'DNSIPsController@delete');
+	//domains
+	Route::post('/views/{view_id}/domains', 'DNSDomainsController@create');
+	Route::post('/views/{view_id}/domains/{id}', 'DNSDomainsController@delete');
 
-//domains
-Route::post('/views/{view_id}/domains', 'DNSDomainsController@create');
-Route::post('/views/{view_id}/domains/{id}', 'DNSDomainsController@delete');
-
-//stats 
-Route::get('/stats/track', 'StatsController@track');
+	//stats 
+	Route::get('/stats/track', 'StatsController@track');
 
 
-Route::get('/blacklist', 'BlacklistController@edit');
-Route::post('/blacklist', 'BlacklistController@save');
+	//Route::get('/blacklist', 'BlacklistController@edit');
+	//Route::post('/blacklist', 'BlacklistController@save');
 
-Auth::routes();
+	Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+	//Route::get('/home', 'HomeController@index');
+});
+
+Route::any('/{url?}', 'HomeController@warningPage');

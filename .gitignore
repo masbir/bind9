@@ -6,3 +6,4 @@ Homestead.json
 Homestead.yaml
 .env
 resources/key
+resources/blacklist

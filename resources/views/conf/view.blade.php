@@ -1,6 +1,6 @@
 acl {{ $dnsview->clients_label }} {
 	@foreach($dnsview->ips as $ip)
-	{{ $ip->iprange }}/{{ $ip->range }};
+	{{ $ip->ipstart }}/{{ $ip->range }};
     @endforeach 
 };
 view {{ $dnsview->view_label }}{
