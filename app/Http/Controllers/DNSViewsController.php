@@ -55,6 +55,9 @@ class DNSViewsController extends Controller
         $dnsview->user_id = $request->user()->id;
         $dnsview->save();
 
+        $dnsview->buildConfFile();
+        $dnsview->uploadConfFile();
+
         BindConfiguration::buildConfOptionsFile();
         BindConfiguration::uploadConfFile();
 
