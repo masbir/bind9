@@ -23,7 +23,7 @@ class HomeController extends Controller
         $ip = $request->ip(); 
 
         //get current server name
-        $server_name = strtolower(trim($request->server("SERVER_NAME")));  
+        $server_name = strtolower(trim($request->server("HTTP_HOST")));  
 
         $ipRecord = DNSIP::ipExists($ip)->first();  
         
