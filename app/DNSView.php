@@ -17,6 +17,11 @@ class DNSView extends Model
     	return $this->hasMany('App\DNSDomain', 'dnsview_id', 'id');
     }
 
+    public function scopeFindOwned($query, $user_id, $view_id)
+    {
+        $query->where("user_id", $user_id)->where("id", $view_id);
+    }
+
     public function buildConfFile()
     {
         $html = \View::make('conf.view', ["dnsview" => $this])->render();

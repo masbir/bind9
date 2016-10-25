@@ -8,11 +8,7 @@ use App\Http\Requests;
 use App\DNSView;
 
 class DNSViewsController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+{ 
     
     public function index(Request $request)
     {

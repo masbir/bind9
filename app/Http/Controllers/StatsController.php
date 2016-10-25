@@ -25,7 +25,8 @@ class StatsController extends Controller
     	if($domain == null) return response("DOMAIN");
 
     	//cache count;
-    	\Cache::increment('domain.' . $domain->id .'.views');
+        $domain->increaseViewCount();
+
 
     	return response("OK");
     }

@@ -9,11 +9,7 @@ use App\DNSView;
 use App\DNSDomain;
 
 class DNSDomainsController extends Controller
-{ 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+{  
 
     public function create(Request $request, $view_id)
     {

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\DNSIP;
+use App\DNSView;
+
 class HomeController extends Controller
 {
     /**
@@ -24,6 +26,7 @@ class HomeController extends Controller
         $server_name = strtolower(trim($request->server("SERVER_NAME")));  
 
         $ipRecord = DNSIP::ipExists($ip)->first();  
+        
         //ip not found in database
         if($ipRecord == null){
             return $this->genericWarning();
@@ -34,7 +37,13 @@ class HomeController extends Controller
             return $this->genericWarning();
         }
 
-        return response()->view("home.warning-page", [], 403);
+        return response()->view("home.warning-page", ["view" => $ipRecord->view], 403);
+    }
+
+    public function previewWarningPage(Request $request, $view_id)
+    {   
+        $dnsview = DNSView::findOwned($request->user()->id, $view_id)->firstOrFail(); 
+        return response()->view("home.warning-page", ["view" => $dnsview]);
     }
 
     private function genericWarning()
