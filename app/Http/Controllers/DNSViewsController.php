@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\DNSView;
+use App\BindConfiguration;
 
 class DNSViewsController extends Controller
 { 
@@ -53,6 +54,10 @@ class DNSViewsController extends Controller
         $dnsview->fill($request->only("name"));
         $dnsview->user_id = $request->user()->id;
         $dnsview->save();
+
+        BindConfiguration::buildConfOptionsFile();
+        BindConfiguration::uploadConfFile();
+
 
         return redirect("/views/" . $dnsview->id); 
     }

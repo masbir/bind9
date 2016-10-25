@@ -17,7 +17,9 @@ class BindConfiguration extends Model
 
     public static function uploadConfFile()
     {
-        \SSH::put(static::getConfOptionsFilePath(), static::getRemoteConfOptionsFilePath());
+        if(\Config::get("app.env") != "local"){
+            \SSH::put(static::getConfOptionsFilePath(), static::getRemoteConfOptionsFilePath());
+        }
     }
 
     public static function getConfOptionsFilePath()
