@@ -1,8 +1,8 @@
-include "/etc/bind/view-default.conf";
+
 @foreach($views as $view)
         include "/etc/bind/{{ $view->conf_file_name }}";
 @endforeach
-
+include "/etc/bind/view-default.conf";
 
 options {
         directory "/var/cache/bind";
