@@ -34,3 +34,7 @@ html.full, html.full body{
 	top: 50%;
 	transform: translateY(-50%);
 }
+.panel-default .panel-heading{
+	font-weight: bold;
+	font-size: 16px;
+}

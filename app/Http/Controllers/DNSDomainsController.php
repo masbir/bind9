@@ -13,15 +13,24 @@ class DNSDomainsController extends Controller
 
     public function create(Request $request, $view_id)
     {
+        $this->validate($request, [
+            'domain' => 'required|hostname|max:255'
+        ],[
+            'hostname' => 'Hostname is invalid',
+        ]);
+
     	$dnsview = DNSView::where("user_id", $request->user()->id)->findOrFail($view_id);
     	
-    	$dnsip = new DNSDomain();
-    	$dnsip->fill($request->all());
-    	$dnsip->dnsview_id = $dnsview->id;
-    	$dnsip->save();
+    	$dnsdomain = new DNSDomain();
+    	$dnsdomain->fill($request->all());
+    	$dnsdomain->dnsview_id = $dnsview->id;
+    	$dnsdomain->save();
 
         $dnsview->buildConfFile();
         $dnsview->uploadConfFile();
+
+        $request->session()->flash('message', $dnsdomain->domain . " successfully added");
+        $request->session()->flash('message-type', "success");
 
     	return redirect("/views/" . $dnsview->id);
     }
@@ -30,6 +39,10 @@ class DNSDomainsController extends Controller
     {
         $dnsview = DNSView::where("user_id", $request->user()->id)->findOrFail($view_id);
         $dnsdomain = $dnsview->domains()->findOrFail($id);
+
+        $request->session()->flash('message', $dnsdomain->domain . " successfully removed");
+        $request->session()->flash('message-type', "danger");
+
         $dnsdomain->delete();
 
         $dnsview->buildConfFile();

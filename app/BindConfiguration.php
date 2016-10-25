@@ -32,7 +32,9 @@ class BindConfiguration extends Model
 
 	public static function reloadBind()
 	{
-		$commands = ['cd /etc/bind', 'sudo rndc reload', 'sudo service bind9 restart'];
-		\SSH::run($commands);
+        if(\Config::get("app.env") != "local"){
+    		$commands = ['cd /etc/bind', 'sudo rndc reload', 'sudo service bind9 restart'];
+    		\SSH::run($commands);
+        }
 	}
 }

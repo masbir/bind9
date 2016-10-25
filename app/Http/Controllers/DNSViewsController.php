@@ -19,6 +19,41 @@ class DNSViewsController extends Controller
     public function view(Request $request, $id)
     {
     	$dnsview = DNSView::where("user_id", $request->user()->id)->findOrFail($id);
-    	return view("dnsview.view", compact('dnsview'));
+        if($request->session()->has("message")){
+            $message = new \stdClass();
+            $message->content = $request->session()->get("message");
+            $message->type = $request->session()->get("message-type");
+        }
+
+    	return view("dnsview.view", compact('dnsview', 'message'));
+    }
+
+    public function updateMessage(Request $request, $id)
+    {
+        $this->validate($request, [
+            'warning' => 'max:255',
+        ]);
+
+        $dnsview = DNSView::where("user_id", $request->user()->id)->findOrFail($id);
+        $dnsview->fill($request->only("warning"));
+        $dnsview->save();
+
+        $request->session()->flash('message', "Message successfully saved");
+        $request->session()->flash('message-type', "success");
+        return redirect("/views/" . $dnsview->id);
+    }
+
+    public function create(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'max:255',
+        ]);
+
+        $dnsview = new DNSView();
+        $dnsview->fill($request->only("name"));
+        $dnsview->user_id = $request->user()->id;
+        $dnsview->save();
+
+        return redirect("/views/" . $dnsview->id); 
     }
 }

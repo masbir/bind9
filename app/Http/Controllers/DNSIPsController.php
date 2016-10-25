@@ -13,6 +13,13 @@ class DNSIPsController extends Controller
     
     public function create(Request $request, $view_id)
     { 
+        $this->validate($request, [
+            'ipstart' => 'required|ipv4|max:15',
+            'range' => 'required|integer|between:16,32',
+        ],[
+            'ipv4' => 'IP address is not a valid IPv4 format.',
+        ]);
+
     	$dnsview = DNSView::where("user_id", $request->user()->id)->findOrFail($view_id);
     	
     	$dnsip = new DNSIP();
@@ -25,6 +32,9 @@ class DNSIPsController extends Controller
         $dnsview->buildConfFile();
         $dnsview->uploadConfFile();
 
+        $request->session()->flash('message', $dnsip->cidr . " successfully added");
+        $request->session()->flash('message-type', "success");
+
     	return redirect("/views/" . $dnsview->id);
     }
 
@@ -32,6 +42,10 @@ class DNSIPsController extends Controller
     {
         $dnsview = DNSView::where("user_id", $request->user()->id)->findOrFail($view_id);
         $dnsip = $dnsview->ips()->findOrFail($id);
+
+        $request->session()->flash('message', $dnsip->cidr . " successfully removed");
+        $request->session()->flash('message-type', "danger");
+
         $dnsip->delete();
 
         $dnsview->buildConfFile();

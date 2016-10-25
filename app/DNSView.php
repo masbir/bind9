@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DNSView extends Model
 {
 	protected $table = 'dnsviews';
+    protected $fillable = ['warning', 'name'];
     public function ips()
     {
     	return $this->hasMany('App\DNSIP', 'dnsview_id', 'id');
@@ -23,16 +24,18 @@ class DNSView extends Model
     }
 
     public function buildConfFile()
-    {
+    { 
         $html = \View::make('conf.view', ["dnsview" => $this])->render();
-        file_put_contents($this->local_conf_file_path, $html);
+        file_put_contents($this->local_conf_file_path, $html);   
     }
 
     public function uploadConfFile($reload = true)
     {
-        \SSH::put($this->local_conf_file_path, $this->remote_conf_file_path);
-        if($reload){
-            \App\BindConfiguration::reloadBind();
+        if(\Config::get("app.env") != "local"){
+            \SSH::put($this->local_conf_file_path, $this->remote_conf_file_path);
+            if($reload){
+                \App\BindConfiguration::reloadBind();
+            }
         }
     }
 

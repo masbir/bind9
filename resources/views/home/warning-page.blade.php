@@ -10,7 +10,7 @@
 		@if($view->warning == null || trim($view->warning) == '')
 			<h1>Hey there! This page is blocked by your network administrator</h1>
 		@else
-			<h1>{{ $view->warning }}</h1>
+			<h1>{!! nl2br(e($view->warning)) !!}</h1>
 		@endif
 		
 	</div>

@@ -18,7 +18,9 @@ Route::group(['domain' => env('APP_HOST')], function () {
 	//views
 	Route::group(['middleware' => 'auth'], function () {
 		Route::get('/', 'DNSViewsController@index');
+		Route::post('/views', 'DNSViewsController@create');
 		Route::get('/views/{id}', 'DNSViewsController@view');
+		Route::post('/views/{id}/message', 'DNSViewsController@updateMessage');
 
 		//ips
 		Route::post('/views/{view_id}/ips', 'DNSIPsController@create');
@@ -32,7 +34,9 @@ Route::group(['domain' => env('APP_HOST')], function () {
 		Route::get('/warning/{view_id}', 'HomeController@previewWarningPage');
 	});
 
-
+	Route::get('/{url?}', function () {
+	    return view('errors.404');
+	});
 	//Route::get('/blacklist', 'BlacklistController@edit');
 	//Route::post('/blacklist', 'BlacklistController@save');
 
