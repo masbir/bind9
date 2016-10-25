@@ -13,7 +13,7 @@ class StatsController extends Controller
         //referrer is admin, do not track
         if(\Auth::check()) return response("ADMIN");
 
-    	$ip = $request->ip(); 
+    	$ip = $request->ip();  
     	
         //referrer not found, terminate
     	if($request->header('referer') == null) return response("REF");

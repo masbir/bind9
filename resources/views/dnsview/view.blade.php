@@ -60,6 +60,9 @@
 								<button class="btn btn-danger">&times;</button>
 							</form>
 							{{ $domain->domain }}
+							<div>
+								Visits : {{ $domain->view_count }}
+							</div>
 						</li>
 					@endforeach
 				</ul> 
