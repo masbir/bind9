@@ -46,4 +46,4 @@ Route::group(['domain' => env('APP_HOST')], function () {
 });
 
 Route::post('/stats/track', 'StatsController@track');
-Route::any('/{url?}', 'HomeController@warningPage');
+Route::any('/{any}', 'HomeController@warningPage')->where('any', '.*');
