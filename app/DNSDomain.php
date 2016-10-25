@@ -15,7 +15,7 @@ class DNSDomain extends Model
 
     public function getViewCountCacheNameAttribute()
     {
-    	return 'domain.' . $domain->id .'.views';
+    	return 'domain.' . $this->id .'.views';
     }
 
     public function getViewCountAttribute()
@@ -26,7 +26,7 @@ class DNSDomain extends Model
     public function increaseViewCount()
     {
     	if(!\Cache::has($this->view_count_cache_name)){
-            \Cache::forever($this->view_count_cache_name);
+            \Cache::forever($this->view_count_cache_name, 0);
         }
     	\Cache::increment($this->view_count_cache_name);
     }

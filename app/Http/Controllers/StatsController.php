@@ -34,7 +34,7 @@ class StatsController extends Controller
     	if($ipRecord->view == null) return response("VIEW");
 
         //no domain found
-    	if($domains->size() == 0) return response("DOMAIN");
+    	if($domains->count() == 0) return response("DOMAIN");
 
     	//cache count;
         foreach($domains as $domain)
