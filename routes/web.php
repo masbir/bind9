@@ -33,6 +33,7 @@ Route::group(['domain' => env('APP_HOST')], function () {
 		//stats 
 		Route::get('/warning/{view_id}', 'HomeController@previewWarningPage');
 	});
+	Auth::routes();
 
 	Route::get('/{url?}', function () {
 	    return view('errors.404');
@@ -40,7 +41,6 @@ Route::group(['domain' => env('APP_HOST')], function () {
 	//Route::get('/blacklist', 'BlacklistController@edit');
 	//Route::post('/blacklist', 'BlacklistController@save');
 
-	Auth::routes();
 
 	//Route::get('/home', 'HomeController@index');
 });
