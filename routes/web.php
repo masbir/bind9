@@ -41,7 +41,5 @@ Route::group(['domain' => env('APP_HOST')], function () {
 	//Route::get('/home', 'HomeController@index');
 });
 
-Route::group(['middleware' => 'guest'], function () {
-	Route::post('/stats/track', 'StatsController@track');
-});
+Route::post('/stats/track', 'StatsController@track');
 Route::any('/{url?}', 'HomeController@warningPage');

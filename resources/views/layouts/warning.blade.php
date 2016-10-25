@@ -12,6 +12,9 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet"> 
+    <script>
+        var base_url = {{ \Config::get("app.url") }};
+    </script>
 </head>
 <body> 
 
